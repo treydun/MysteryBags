@@ -1,35 +1,49 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>random</groupId>
-  <artifactId>MysteryBags</artifactId>
-  <version>1.40</version>
-     <pluginRepositories>
-       <pluginRepository>
-           <id>bukkit-repo</id>
-           <url>http://repo.bukkit.org/content/groups/public/</url>
-       </pluginRepository>
-   </pluginRepositories>
-      <dependencies>
-       <dependency>
-           <groupId>org.bukkit</groupId>
-           <artifactId>spigot</artifactId>
-           <version>1.12</version>
-           <type>jar</type>
-           <scope>provided</scope>
-       </dependency>
-       <dependency>
-           <groupId>reference</groupId>
-           <artifactId>WorldGuard</artifactId>
-           <version>1.8</version>
-           <type>jar</type>
-           <scope>provided</scope>
-       </dependency>
-       <dependency>
-           <groupId>reference</groupId>
-           <artifactId>WorldEdit</artifactId>
-           <version>1.8</version>
-           <type>jar</type>
-           <scope>provided</scope>
-       </dependency>
-   </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <groupId>random</groupId>
+    <artifactId>MysteryBags</artifactId>
+    <version>1.40</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <!-- Spigot Repo -->
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+
+        <repository>
+            <id>sk89q-repo</id>
+            <url>http://maven.sk89q.com/repo/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <!-- Spigot -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.13.2-R0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-core</artifactId>
+            <version>7.0.0-SNAPSHOT</version>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>com.sk89q.worldedit</groupId>
+            <artifactId>WorldEdit</artifactId>
+            <version>1.8</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        -->
+    </dependencies>
 </project>

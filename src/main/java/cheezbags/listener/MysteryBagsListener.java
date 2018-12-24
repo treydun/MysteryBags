@@ -4,6 +4,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -29,7 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
 import cheezbags.Hand;
@@ -192,10 +195,17 @@ public class MysteryBagsListener implements Listener {
             return true;
         
         Set<String> returned = new HashSet<String>();
-        for (ProtectedRegion p : WorldGuardPlugin.inst().getRegionManager(loc.getWorld()).getApplicableRegions(loc).getRegions()) {
-            returned.add(p.getId());
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+
+        RegionManager regionManager = container.get(WorldGuard.getInstance().getPlatform().getWorldByName(loc.getWorld().getName()));
+        if (regionManager != null) {
+            Set<ProtectedRegion> regions = regionManager.getApplicableRegions(BlockVector3.at(loc.getX(),loc.getY(),loc.getZ())).getRegions();
+            for (ProtectedRegion p : regions) {
+                returned.add(p.getId());
+            }
+            return returned.removeAll(set);
         }
-        return returned.removeAll(set);
+        return false;
     }
     
     private static boolean b(ItemStack item) {
