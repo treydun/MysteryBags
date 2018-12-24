@@ -7,6 +7,7 @@ import java.util.Set;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -48,7 +49,7 @@ public class MysteryBagsListener implements Listener {
     
     private MysteryBags instance;
     
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntitySpawn(CreatureSpawnEvent e) {
         if (e.getSpawnReason() == SpawnReason.SPAWNER)
             e.getEntity().setMetadata("isSpawnerMob", new FixedMetadataValue(instance, true));
@@ -107,20 +108,20 @@ public class MysteryBagsListener implements Listener {
             Hand hand = e.getHand() == EquipmentSlot.HAND ? Hand.MAIN : Hand.OFF;
             List<String> lore = i.getItemMeta().getLore();
             if (lore != null && lore.size() > 0) {
-                String id = lore.get(0).replace("§", "");
+                String id = lore.get(0).replace(ChatColor.COLOR_CHAR+"", "");
                 MysteryBag bag = instance.cheezBags.get(id);
                 if (bag != null) {
                     e.setCancelled(true);
                     if (p.hasPermission("mysterybags.open"))
                         bag.open(e.getPlayer(), hand);
                     else
-                        p.sendMessage(MysteryBags.PREFIX + "§7You do not have permission to open that.");
+                        p.sendMessage(MysteryBags.PREFIX + ChatColor.GRAY+"You do not have permission to open that.");
                 }
             }
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onCraftItem(CraftItemEvent e) {
         boolean playerInv = e.getClickedInventory() instanceof PlayerInventory;
         Player p = (Player) e.getWhoClicked();
@@ -128,7 +129,7 @@ public class MysteryBagsListener implements Listener {
             ItemStack item = e.getClickedInventory().getContents()[i];
             if (b(item)) {
                 e.setCancelled(true);
-                p.sendMessage(MysteryBags.PREFIX + "§7You may not craft with Mystery Bags!");
+                p.sendMessage(MysteryBags.PREFIX + ChatColor.GRAY+"You may not craft with Mystery Bags!");
                 p.playSound(p.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 0.4F, 1.2F);
                 p.closeInventory();
                 break;
@@ -136,7 +137,7 @@ public class MysteryBagsListener implements Listener {
         }
     }
     
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void inventoryClickEvent(InventoryClickEvent event) {
         if (event.getClickedInventory() == null || event.getClickedInventory().equals(event.getView().getBottomInventory()) && !event.getClick().isShiftClick() && !event.getClick().isKeyboardClick())
             return;
@@ -147,7 +148,7 @@ public class MysteryBagsListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void inventoryDragEvent(InventoryDragEvent e) {
         if (e.getInventory() == null)
             return;
@@ -156,7 +157,7 @@ public class MysteryBagsListener implements Listener {
             e.setCancelled(true);
     }
     
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void inventoryMove(InventoryMoveItemEvent e) {
         if (check(e.getDestination().getType(), e.getItem()))
             e.setCancelled(true);
@@ -184,7 +185,7 @@ public class MysteryBagsListener implements Listener {
             MysteryBag bag = instance.cheezBags.get(title);
             if (bag != null) {
                 bag.closeEditor((Player) e.getPlayer(), e.getInventory());
-                e.getPlayer().sendMessage(MysteryBags.PREFIX + "§aRemember to use §e/mbags save " + title + " §ato save your changes!");
+                e.getPlayer().sendMessage(MysteryBags.PREFIX + "Â§aRemember to use Â§e/mbags save " + title + " Â§ato save your changes!");
             }
             e.getPlayer().removeMetadata("cheezbags.editor", MysteryBags.instance());
         }
@@ -212,7 +213,7 @@ public class MysteryBagsListener implements Listener {
         if (item != null && item.getType() != Material.AIR) {
             List<String> lore = item.getItemMeta().getLore();
             if (lore != null) {
-                return MysteryBags.instance().cheezBags.containsKey(lore.get(0).replace("§", ""));
+                return MysteryBags.instance().cheezBags.containsKey(lore.get(0).replace(ChatColor.COLOR_CHAR+"", ""));
             }
         }
         return false;

@@ -29,7 +29,7 @@ import cheezbags.listener.MysteryBagsListener;
 
 public class MysteryBags extends JavaPlugin {
     
-    public static final String PREFIX = "ง2[MysteryBags] งf";
+    public static final String PREFIX = "ยง2[MysteryBags] ยงf";
     
     private static MysteryBags instance;
     public static String VERSION;
@@ -98,8 +98,8 @@ public class MysteryBags extends JavaPlugin {
         lootingEffectiveness = config.getDouble("looting-effectiveness");
         limitRegions = new HashSet<String>(config.getStringList("drop-limit-to-area"));
         limitWorlds = new HashSet<String>(config.getStringList("drop-limit-to-world"));
-        openMessage = config.getString("open-message").replace("&", "ง");
-        rareLootMessage = config.getString("announce-rare-loot-message").replace("&", "ง");
+        openMessage = config.getString("open-message").replace("&", "ยง");
+        rareLootMessage = config.getString("announce-rare-loot-message").replace("&", "ยง");
         spyMessage = ConfigReader.getBoolean(config, "openingspymessage");
         announceRare = ConfigReader.getBoolean(config, "announce-rare-loot");
         rareFirework = ConfigReader.getBoolean(config, "rare-loot-firework");
@@ -154,11 +154,11 @@ public class MysteryBags extends JavaPlugin {
     }
     
     public static void throwError(String s) {
-        Bukkit.getConsoleSender().sendMessage("ง4[ERROR] งc" + s);
+        Bukkit.getConsoleSender().sendMessage("ยง4[ERROR] ยงc" + s);
     }
     
     public static boolean isRare(ItemStack loot) {
-        String nameToCheck = loot.getItemMeta().hasDisplayName() ? loot.getItemMeta().getDisplayName().replace("ง", "&") : null;
+        String nameToCheck = loot.getItemMeta().hasDisplayName() ? loot.getItemMeta().getDisplayName().replace("ยง", "&") : null;
         if (nameToCheck != null)
             nameToCheck = nameToCheck.contains(" statistic_item_amount ") ? nameToCheck.split(" statistic_item_amount ")[0] : nameToCheck;
         return instance.rares.containsKey(loot.getType()) && (instance.rares.get(loot.getType()).isEmpty() || instance.rares.get(loot.getType()).contains(nameToCheck));
@@ -173,7 +173,7 @@ public class MysteryBags extends JavaPlugin {
         if (!meta.hasDisplayName())
             return true;
         String[] split = meta.getDisplayName().split(" statistic_item_amount ");
-        if (split.length > 1 && split[0].equals("งj")) {
+        if (split.length > 1 && split[0].equals("ยงj")) {
             return true;
         }
         return false;
@@ -189,7 +189,7 @@ public class MysteryBags extends JavaPlugin {
         if (item == null || item.getType() != Material.WRITTEN_BOOK)
             return false;
         ItemMeta meta = item.getItemMeta();
-        return meta.hasLore() && meta.getLore().get(0).equals("งeงlRun Command:งjงjงj");
+        return meta.hasLore() && meta.getLore().get(0).equals("ยงeยงlRun Command:ยงjยงjยงj");
     }
     
     public static String capitalizeFirst(String s) {

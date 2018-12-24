@@ -3,6 +3,7 @@ package cheezbags.api;
 import java.io.File;
 import java.util.List;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,7 +38,7 @@ public class MysteryBagsAPI {
         
         List<String> lore = stack.getItemMeta().getLore();
         if (lore != null && lore.size() > 0) {
-            String id = lore.get(0).replace("§", "");
+            String id = lore.get(0).replace(ChatColor.COLOR_CHAR+"", "");
             MysteryBag bag = MysteryBags.instance().cheezBags.get(id);
             return bag != null;
         }
