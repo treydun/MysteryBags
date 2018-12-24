@@ -3,6 +3,7 @@ package cheezbags;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -40,6 +41,13 @@ public class CommandHandler implements CommandExecutor {
         "§e/mbag removelore <#lines> - §7Removes that many lines from lore",
         "§e/mbag unbreakable - §7Toggles held item unbreakability. §cRequires Spigot",
     };
+
+    public final static EnumSet<Material> HEADS = EnumSet.of(Material.PLAYER_HEAD,
+            Material.ZOMBIE_HEAD,
+            Material.CREEPER_HEAD,
+            Material.DRAGON_HEAD,
+            Material.SKELETON_SKULL,
+            Material.WITHER_SKELETON_SKULL);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args) {
@@ -338,7 +346,7 @@ public class CommandHandler implements CommandExecutor {
                         if (sender instanceof Player) {
                             Player p = (Player) sender;
                             ItemStack item = p.getInventory().getItemInMainHand();
-                            if (item.getType() != Material.SKULL_ITEM || item.getDurability() != 3) {
+                            if (item.getType() != Material.PLAYER_HEAD) {
                                 p.sendMessage(MysteryBags.PREFIX + "§aThis command only works while you're holding a player head.");
                                 return true;
                             }

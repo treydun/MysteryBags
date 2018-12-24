@@ -131,6 +131,24 @@ public class MysteryBag {
     }
     
     public MysteryBag(String id, String icon, String displayname, List<String> openmsg, boolean create) {
+        try{
+            this.item = new ItemStack(Material.getMaterial(icon.toUpperCase()),1);
+        } catch (Exception ex){
+            MysteryBags.throwError(id + " has an invalid material specified!");
+            this.item = new ItemStack(Material.CHEST,1);
+        }
+
+        if(item.getType()==Material.PLAYER_HEAD){
+            try {
+                String b64 = icon.split(":")[0];
+                this.item = new ItemStack(Material.PLAYER_HEAD, 1);
+                MysteryBags.setCustomSkullItemEncoded(this.item, b64);
+            } catch (Exception e2) {
+                MysteryBags.throwError(id + " has an invalid material and skull data specified!");
+                this.item = new ItemStack(Material.CHEST);
+            }
+        }
+        /*
         try {
             String[] split = icon.split(":");
             try {
@@ -153,7 +171,7 @@ public class MysteryBag {
                 this.item = new ItemStack(Material.CHEST);
             }
         }
-        
+        */
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(displayname.replace("&", "§"));
         List<String> lore = new ArrayList<String>();
@@ -173,7 +191,8 @@ public class MysteryBag {
             this.failurechance = 0.0;
             YamlConfiguration config = new YamlConfiguration();
             config.set("enabled", false);
-            config.set("material", item.getType() + ":" + item.getDurability());
+            //config.set("material", item.getType() + ":" + item.getDurability());
+            config.set("material", item.getType());
             config.set("give-all-items", false);
             config.set("always-rare", false);
             config.set("displayname", item.getItemMeta().getDisplayName().replace("§", "&"));
